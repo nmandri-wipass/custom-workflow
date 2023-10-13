@@ -40,8 +40,8 @@ export class NodeEditorComponent implements OnInit, AfterViewInit {
     console.log("onAddNodeClick: ", event)
     var transform = null;
     if (event) {
-      const xCoord = event.x
-      const yCoord = event.y + 200
+      const xCoord = event.x + 400
+      const yCoord = event.y //+ 200
       transform = {
         x: xCoord,
         y: yCoord
@@ -73,11 +73,11 @@ export class NodeEditorComponent implements OnInit, AfterViewInit {
         new LeaderLine(el1.outputSlot.port.nativeElement, el2.inputSlot.port.nativeElement, {
           startPlug: 'behind',
           endPlug: 'behind',
-          startSocket: 'bottom',
-          endSocket: 'top',
+          startSocket: 'right',
+          endSocket: 'left',
           color: '#959da5',
-          startSocketGravity: 150,
-          endSocketGravity: 150
+          startSocketGravity: 30,
+          endSocketGravity: 30
         })
       );
     }
