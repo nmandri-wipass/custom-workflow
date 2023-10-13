@@ -6,7 +6,9 @@
 		<strong>{{ config.description || "⛔ No config" }}</strong>
 		<p>{{ config.name || "⚠ Config missing" }}</p>
 	</div>
-	<div class="slots-container">
+	<div class="slots-container"
+	style="cursor: pointer;"
+	(click)="addNextNode()">
 		<app-node-slot *ngIf="config?.hasOutput" [slotType]="SlotTypeEnum.Output"></app-node-slot>
 	</div>
 </div>

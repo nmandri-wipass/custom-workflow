@@ -36,23 +36,39 @@ export class NodeEditorComponent implements OnInit, AfterViewInit {
     console.log(this.nodesContainerRect);
   }
 
-  onAddNodeClick(event: Event) {
-    this.nodes.push(new Node(`nodeId_${this.nodes.length + 1}`, "continue", `nodeId: ${this.nodes.length}`, this.nodes.length > 0, true));
-
+  onAddNodeClick(event: any | undefined) {
+    console.log("onAddNodeClick: ", event)
+    var transform = null;
+    if (event) {
+      const xCoord = event.x
+      const yCoord = event.y + 200
+      transform = {
+        x: xCoord,
+        y: yCoord
+      };
+    }
+    console.log(transform)
+    this.nodes.push(
+      new Node(
+        `nodeId_${this.nodes.length + 1}`,
+        "continue",
+        `nodeId: ${this.nodes.length}`,
+        this.nodes.length > 0,
+        true,
+        transform
+      )
+    );
     setTimeout(() => this.connectNodes());
   }
 
   connectNodes() {
     if (this.nodes.length > 1) {
       const nodesToConnect = this.nodeComponents.filter((item, idx) => idx >= this.nodes.length - 2);
-
+      console.log("nodesToConnect: ", nodesToConnect)
       const el1 = nodesToConnect[0];
       const el2 = nodesToConnect[1];
-
       let link = new Link(el1.config.id, el2.config.id);
-
       this.links.push(link);
-
       this.linkLines.push(
         new LeaderLine(el1.outputSlot.port.nativeElement, el2.inputSlot.port.nativeElement, {
           startPlug: 'behind',

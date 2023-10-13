@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostListener, ElementRef, NgZone, ChangeDetectorRef, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, Input, HostListener, ElementRef, NgZone, ChangeDetectorRef, QueryList, ViewChildren, EventEmitter, Output } from '@angular/core';
 import { Node } from '../node.model';
 import { SlotType } from '../node-slot/slot-type.enum';
 import { NodeSlotComponent } from '../node-slot/node-slot.component';
@@ -14,6 +14,9 @@ export class NodeComponent implements OnInit {
 
   @Input()
   config: Node;
+
+  @Output()
+  addNodeEmitter = new EventEmitter();
 
   @ViewChildren(NodeSlotComponent) slots: QueryList<NodeSlotComponent>;
 
@@ -46,4 +49,25 @@ export class NodeComponent implements OnInit {
     this.cdRef.markForCheck();
   }
 
+  addNextNode() {
+    const transformString = this.el.nativeElement.style.transform;
+    this.addNodeEmitter.emit(
+      this.extractTranslate3DValues(transformString)
+    )
+  }
+
+  extractTranslate3DValues(translate3D: string): { x: number, y: number } {
+    // Use a regular expression to extract the x and y values
+    const regex = /translate3d\(([-\d.]+)px, ([-\d.]+)px, ([-\d.]+)px\)/;
+    const match = translate3D.match(regex);
+
+    if (match) {
+        const x = parseFloat(match[1]);
+        const y = parseFloat(match[2]);
+        return { x, y };
+    } else {
+        // Handle invalid input or no match
+        throw new Error("Invalid or unsupported transform value.");
+    }
+  }
 }

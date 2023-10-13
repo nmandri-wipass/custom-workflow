@@ -4,6 +4,7 @@ export class Node {
 		public name: string,
 		public description: string,
 		public takesInput: boolean,
-		public hasOutput: boolean) {
+		public hasOutput: boolean,
+		public dragPosition?: any) {
 	}
 }

@@ -1,10 +1,18 @@
 <div class="node-editor-wrapper">
 	<div class="tools">
 		<button nz-button nzType="danger" nzSize="large" nzShape="round" nzGhost (click)="onResetClick($event)">💣 Reset</button>
-		<button nz-button nzType="primary" nzSize="large" nzShape="round" (click)="onAddNodeClick($event)">⚡ Add workflow</button>
+		<button nz-button nzType="primary" nzSize="large" nzShape="round" (click)="onAddNodeClick(undefined)">⚡ Add workflow</button>
 	</div>
 
 	<div class="nodes-container" #nodesContainer>
-		<app-node *ngFor="let n of nodes" [config]="n" class="node" cdkDrag cdkDragBoundary=".node-editor-wrapper" (cdkDragMoved)="onDragMove($event)" [cdkDragData]="n.id"></app-node>
+		<app-node *ngFor="let n of nodes" 
+		class="node"
+		cdkDrag
+		[cdkDragFreeDragPosition]="n.dragPosition"
+		cdkDragBoundary=".node-editor-wrapper"
+		[config]="n"
+		[cdkDragData]="n.id"
+		(cdkDragMoved)="onDragMove($event)"
+		(addNodeEmitter)="onAddNodeClick($event)"></app-node>
 	</div>
 </div>
