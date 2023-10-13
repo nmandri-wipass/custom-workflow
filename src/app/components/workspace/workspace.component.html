@@ -1,26 +1,5 @@
-<div id="workspace" #workspace cdkDropList
-  (cdkDropListDropped)="onNodeDropped($event)">
-  <!-- SVG for drawing connections -->
-  <svg [attr.width]="workspaceWidth" [attr.height]="workspaceHeight"
-    [attr.viewBox]="'0 0 ' + workspaceWidth + ' ' + workspaceHeight"
-    class="connection-layer">
-    <line 
-      *ngFor="let connection of (connections$ | async)"
-      [attr.x1]="getNodeCenterPosition(connection.startNodeId).x"
-      [attr.y1]="getNodeCenterPosition(connection.startNodeId).y"
-      [attr.x2]="getNodeCenterPosition(connection.endNodeId).x"
-      [attr.y2]="getNodeCenterPosition(connection.endNodeId).y"
-      stroke="black"
-    ></line>
-  </svg>
-  <!-- Nodes rendering -->
-  <ng-container *ngFor="let node of (workspaceData$ | async)?.nodes">
-    <app-request-node *ngIf="node.type === 'request'"
-      [node]="node"
-      (nodeClicked)="startConnection(node)"
-    ></app-request-node>
-    <app-condition-node *ngIf="node.type === 'condition'"
-      [node]="node"
-    ></app-condition-node>
-  </ng-container>
+<div>
+	<div>
+		<app-node-editor></app-node-editor>
+	</div>
 </div>
